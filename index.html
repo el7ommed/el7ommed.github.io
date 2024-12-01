@@ -16,12 +16,18 @@
 
 	<!-- Custom styles for this template -->
 	<link href="styles/signin.css" rel="stylesheet">
+
+	<!-- favicon -->
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
 </head>
 
 <body class="text-center">
 
 	<main class="form-signin">
-		<form>
+		<form id="login-form">
 			<img class="mb-4" src="./assets/01.jpg" alt="" width="72">
 
 			<h1 class="h3 mb-3 fw-normal">Please sign in</h1>
@@ -36,11 +42,11 @@
 				<label for="floatingPassword">Password</label>
 			</div>
 
-			<div class="checkbox mb-3">
+			<!-- <div class="checkbox mb-3">
 				<label>
 					<input type="checkbox" value="remember-me"> Remember me
 				</label>
-			</div>
+			</div> -->
 
 			<button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
 
