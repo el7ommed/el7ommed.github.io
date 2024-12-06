@@ -1,47 +1,35 @@
 console.log("profile.js loaded!");
 
-// let queryBasicUserDetails = `
-// query userBasic {
-//     user {
-//         firstName
-//         lastName
-//         login
-//         campus
-//         createdAt
-//     }
-// }
-// `
+const jwt = localStorage.getItem('jwt');
 
-// let queryAuditDetails = `
-// query auditOverview {
-//     audit(offset: 0, limit: 1) {
-//         attrs
-//         auditedAt
-//         auditorId
-//         createdAt
-//         endAt
-//         grade
-//         groupId
-//         id
-//         resultId
-//         updatedAt
-//         version
-//     }
-// }
-// `
+const headers = {
+    'Authorization': 'Bearer ' + jwt,
+    'Content-Type': 'text/plain;charset=UTF-8',
+    'Accept': '*/*',
+    'Cache-Control': 'no-cache',
+    'Pragma': 'no-cache',
+};
 
-// let queryGroupDetails = `
-// query groupList {
-//     group(offset: 0, limit: 1) {
-//         campus
-//         captainId
-//         createdAt
-//         eventId
-//         id
-//         objectId
-//         path
-//         status
-//         updatedAt
-//     }
-// }
-// `
+const query = `
+{
+	"query": "query basicInfo{\nuser{\n id\n firstName\n lastName\n}\n}",
+	"operationName": "basicInfo"
+}`;
+
+fetch('https://learn.reboot01.com/api/graphql-engine/v1/graphql', {
+    method: 'POST',
+    headers: headers,
+    body: query
+})
+    .then(response => response.json())
+    .then(data => {
+        if (data.errors) {
+            console.error('GraphQL Error:', data.errors);
+        } else {
+            const user = data.data.user;
+            console.log('User Data:', user);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
