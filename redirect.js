@@ -1,6 +1,6 @@
 console.log("redirect.js loaded!");
 
-const jwt = localStorage.getItem('jwt');
+export const jwt = localStorage.getItem('jwt');
 
 if (!jwt) {
 	if (window.location.pathname !== '/index.html') {

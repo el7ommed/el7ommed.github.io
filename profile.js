@@ -2,6 +2,8 @@ console.log("profile.js loaded!");
 
 // const jwt = localStorage.getItem('jwt');
 
+import { jwt } from './redirect.js';
+
 const headers = {
 	'Authorization': 'Bearer ' + jwt,
 	'Content-Type': 'application/json',
