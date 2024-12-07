@@ -10,7 +10,7 @@
 	<link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="pt-5">
 	<main>
 		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 			<div class="container-fluid">
@@ -35,6 +35,58 @@
 				</div>
 			</div>
 		</nav>
+
+		<div class="container-fluid bg-body">
+			<section>
+
+				<article class="my-3" id="card">
+
+					<div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<h3>last 5 audits</h3>
+					</div>
+
+					<div class="row row-cols-1 row-cols-md-2 g-5">
+						<div class="col">
+							<div class="card mb-4">
+								<div class="card-header">Audit with</div>
+								<div class="card-body">
+									<h5 class="card-title">Card title</h5>
+									<a class="btn btn-primary">code: </a>
+								</div>
+								<div class="card-footer text-muted">${timestamp}</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row row-cols-1 row-cols-md-2 g-5">
+						<div class="col">
+							<div class="card mb-4">
+								<div class="card-header">Audit with</div>
+								<div class="card-body">
+									<h5 class="card-title">Card title</h5>
+									<a class="btn btn-primary">code: </a>
+								</div>
+								<div class="card-footer text-muted">${timestamp}</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row row-cols-1 row-cols-md-2 g-5">
+						<div class="col">
+							<div class="card mb-4">
+								<div class="card-header">Audit with</div>
+								<div class="card-body">
+									<h5 class="card-title">Card title</h5>
+									<a class="btn btn-primary">code: </a>
+								</div>
+								<div class="card-footer text-muted">${timestamp}</div>
+							</div>
+						</div>
+					</div>
+
+				</article>
+			</section>
+		</div>
 	</main>
 
 	<script type="module" src="profile.js"></script>
