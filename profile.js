@@ -10,7 +10,7 @@ const headers = {
 	'Pragma': 'no-cache',
 };
 
-const query = JSON.stringify({
+const basicInfo = JSON.stringify({
 	query: "query basicInfo { user { id firstName lastName}}",
 	operationName: "basicInfo"
 });
@@ -18,14 +18,14 @@ const query = JSON.stringify({
 fetch('https://learn.reboot01.com/api/graphql-engine/v1/graphql', {
 	method: 'POST',
 	headers: headers,
-	body: query
+	body: basicInfo
 })
 	.then(response => response.json())
 	.then(data => {
 		if (data.errors) {
 			console.error('GraphQL Error:', data.errors);
 		} else {
-			const user = data.data.user;
+			const user = data.data.user[0];
 			console.log('User Data:', user);
 
 			document.title = `${user.firstName} ${user.lastName}'s Profile`;
