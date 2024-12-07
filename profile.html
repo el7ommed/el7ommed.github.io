@@ -14,25 +14,22 @@
 	<main>
 		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 			<div class="container-fluid">
-				<a class="navbar-brand">Hello, ${firstName}</a>
+				<a class="navbar-brand">Hello, ${firstName} ${lastName} (${login})</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
 					aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarCollapse">
 					<ul class="navbar-nav me-auto mb-2 mb-md-0">
-						<!-- <li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="#">Home</a>
-						</li> -->
+						<li class="nav-item">
+							<a class="nav-link disabled" id="nav-user-id" tabindex="-1" aria-disabled="true">user #</a>
+						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="https://github.com/el7ommed/el7ommed.github.io">Github repo</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="https://learn.reboot01.com/git/moadwan/graphql">Gitea repo</a>
 						</li>
-						<!-- <li class="nav-item">
-							<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-						</li> -->
 					</ul>
 					<button class="btn btn-outline-danger" type="" id="Logout">Logout</button>
 				</div>

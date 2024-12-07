@@ -11,7 +11,7 @@ const headers = {
 };
 
 const basicInfo = JSON.stringify({
-	query: "query basicInfo { user { id firstName lastName}}",
+	query: "query basicInfo { user { id login firstName lastName }}",
 	operationName: "basicInfo"
 });
 
@@ -26,13 +26,17 @@ fetch('https://learn.reboot01.com/api/graphql-engine/v1/graphql', {
 			console.error('GraphQL Error:', data.errors);
 		} else {
 			const user = data.data.user[0];
-			console.log('User Data:', user);
 
 			document.title = `${user.firstName} ${user.lastName}'s Profile`;
 
 			const navbarBrand = document.querySelector('.navbar-brand');
 			if (navbarBrand) {
-				navbarBrand.textContent = `Hello, ${user.firstName}`;
+				navbarBrand.textContent = `Hello, ${user.firstName} ${user.lastName} (${user.login})`;
+			}
+
+			const navUserID = document.getElementById('nav-user-id');
+			if (navUserID) {
+				navUserID.textContent = "user #" + user.id;
 			}
 		}
 	})
