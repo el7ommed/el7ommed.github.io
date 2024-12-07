@@ -1,7 +1,5 @@
 console.log("profile.js loaded!");
 
-// const jwt = localStorage.getItem('jwt');
-
 import { jwt } from './redirect.js';
 
 const headers = {
@@ -12,10 +10,10 @@ const headers = {
 	'Pragma': 'no-cache',
 };
 
-const query = `{
-	"query": "query basicInfo{\nuser{\n id\n firstName\n lastName\n}\n}",
-	"operationName": "basicInfo"
-}`;
+const query = JSON.stringify({
+	query: "query basicInfo { user { id firstName lastName}}",
+	operationName: "basicInfo"
+});
 
 fetch('https://learn.reboot01.com/api/graphql-engine/v1/graphql', {
 	method: 'POST',
