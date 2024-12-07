@@ -4,7 +4,7 @@ const jwt = localStorage.getItem('jwt');
 
 const headers = {
 	'Authorization': 'Bearer ' + jwt,
-	'Content-Type': 'text/plain;charset=UTF-8',
+	'Content-Type': 'application/json',
 	'Accept': '*/*',
 	'Cache-Control': 'no-cache',
 	'Pragma': 'no-cache',
@@ -27,8 +27,23 @@ fetch('https://learn.reboot01.com/api/graphql-engine/v1/graphql', {
 		} else {
 			const user = data.data.user;
 			console.log('User Data:', user);
+
+			document.title = `${user.firstName} ${user.lastName}'s Profile`;
+
+			const navbarBrand = document.querySelector('.navbar-brand');
+			if (navbarBrand) {
+				navbarBrand.textContent = `Hello, ${user.firstName}`;
+			}
 		}
 	})
 	.catch(error => {
 		console.error('Error:', error);
 	});
+
+const logoutButton = document.getElementById('Logout');
+if (logoutButton) {
+	logoutButton.addEventListener('click', () => {
+		localStorage.removeItem('jwt');
+		window.location.href = 'index.html';
+	});
+}
