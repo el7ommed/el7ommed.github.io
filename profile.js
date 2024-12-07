@@ -1,6 +1,6 @@
 console.log("profile.js loaded!");
 
-const jwt = localStorage.getItem('jwt');
+// const jwt = localStorage.getItem('jwt');
 
 const headers = {
 	'Authorization': 'Bearer ' + jwt,
