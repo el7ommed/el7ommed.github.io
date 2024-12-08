@@ -28,6 +28,18 @@ function formatTimestamp(timestamp) {
 	});
 }
 
+function formatBytes(bytes) {
+	const units = ["Bytes", "KB", "MB"];
+	let unitIndex = 0;
+
+	while (bytes >= 1000 && unitIndex < units.length - 1) {
+		bytes /= 1000;
+		unitIndex++;
+	}
+
+	return `${bytes} ${units[unitIndex]}`;
+}
+
 async function fetchGraphQL(query, operationName) {
 	const body = JSON.stringify({ query, operationName });
 	const response = await fetch(GRAPHQL_ENDPOINT, {
@@ -154,7 +166,7 @@ function populateProjects(projects) {
 				<div class="card-header">Project</div>
 				<div class="card-body">
 					<h5 class="card-title">${project.path}</h5>
-					<p class="card-text">Earned XP: ${project.amount}</p>
+					<p class="card-text">Earned XP: ${formatBytes(project.amount)}</p>
 				</div>
 				<!-- <div class="card-footer text-muted">Description</div> -->
 			</div>`;
