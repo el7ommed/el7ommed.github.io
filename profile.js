@@ -125,12 +125,30 @@ async function fetchTopProjects() {
 	// console.log("Top Projects:", data.xp_view);
 }
 
+async function fetchTopSkills() {
+	const query =
+		`query highestSkills {
+			user {
+				transactions(
+				where: {type: {_like: "skill_%"}}
+				distinct_on: type
+				order_by: [{type: asc}, {amount: desc}]
+				) {
+					type
+					amount
+				}
+			}
+		}`
+	const data = await fetchGraphQL(query, "highestSkills");
+	// console.log("Top Skills:", data.user[0].transactions);
+}
+
 (async () => {
 	try {
 		await fetchBasicInfo();
 		await fetchLastAudits();
 		await fetchTopProjects();
-		// await function();
+		await fetchTopSkills();
 	} catch (error) {
 		console.error(error.message);
 	}
