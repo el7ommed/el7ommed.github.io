@@ -183,7 +183,7 @@ function populateProjects(projects) {
 			`<div class="card">
 				<div class="card-header">Project</div>
 				<div class="card-body">
-					<h5 class="card-title">${project.path}</h5>
+					<h5 class="card-title">${project.path.split('/').pop()}</h5>
 					<p class="card-text">Earned XP: ${formatBytes(project.amount)}</p>
 				</div>
 				<!-- <div class="card-footer text-muted">Description</div> -->
