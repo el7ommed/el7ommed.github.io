@@ -6,7 +6,7 @@ let currUser = {
 	id: 0,
 	login: '',
 	firstName: '',
-	lastName: ''
+	lastName: '',
 };
 
 const headers = {
@@ -19,7 +19,8 @@ const headers = {
 
 async function fetchBasicInfo() {
 	const basicInfo = JSON.stringify({
-		query: `query basicInfo {
+		query:
+		`query basicInfo {
 			user {
 				id
 				login
@@ -61,17 +62,18 @@ function updatePage(user) {
 
 async function fetchLastAudits() {
 	const lastAuditsGiven = JSON.stringify({
-		query: `query lastAuditsGiven { 
-			audit(where: {auditor: {id: {_eq: ${currUser.id}}}}, order_by: {id: desc}, limit: 5) { 
-				createdAt 
-				group { 
-					captain { 
-						firstName 
-						lastName 
-						login 
-					} 
-				} 
-			} 
+		query:
+		`query lastAuditsGiven {
+			audit(where: {auditor: {id: {_eq: ${currUser.id}}}}, order_by: {id: desc}, limit: 5) {
+				createdAt
+				group {
+					captain {
+						firstName
+						lastName
+						login
+					}
+				}
+			}
 		}`,
 		operationName: "lastAuditsGiven",
 	});
@@ -88,12 +90,36 @@ async function fetchLastAudits() {
 	}
 }
 
+async function fetchTopProjects() {
+	const topProjects = JSON.stringify({
+		query:
+		`query topProjects {
+			xp_view(limit: 5, order_by: {amount: desc}) {
+				amount
+				path
+			}
+		}`,
+		operationName: "topProjects"
+	});
+
+	const response = await fetch('https://learn.reboot01.com/api/graphql-engine/v1/graphql', {
+		method: 'POST',
+		headers: headers,
+		body: topProjects,
+	});
+	const data = await response.json();
+
+	if (data.errors) {
+		throw new Error(`GraphQL Error: ${data.errors}`);
+	}
+}
+
 (async () => {
 	try {
 		await fetchBasicInfo();
 		await fetchLastAudits();
-		//await
-		//await
+		await fetchTopProjects();
+		// await function();
 	} catch (error) {
 		console.error(error.message);
 	}
