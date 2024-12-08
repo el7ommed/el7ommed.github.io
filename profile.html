@@ -12,6 +12,7 @@
 
 <body class="pt-5">
 	<main>
+		<!-- Navbar -->
 		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 			<div class="container-fluid">
 				<a class="navbar-brand">Hello, ${firstName} ${lastName} (${login})</a>
@@ -36,56 +37,47 @@
 			</div>
 		</nav>
 
-		<div class="container-fluid bg-body">
-			<section>
+		<!-- Main Content -->
+		<div class="container-fluid mt-4">
+			<div class="row">
 
-				<article class="my-3" id="card">
-
-					<div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
-						<h3>last 5 audits</h3>
-					</div>
-
-					<div class="row row-cols-1 row-cols-md-2 g-5">
+				<!-- Left Half: Last 5 Audits -->
+				<div class="col-md-6">
+					<h3 class="mb-4">Last 5 Audits</h3>
+					<div class="row row-cols-1 g-4" id="audits-container">
+						<!-- Placeholder cards for audits -->
 						<div class="col">
-							<div class="card mb-4">
+							<div class="card">
 								<div class="card-header">Audit with</div>
 								<div class="card-body">
-									<h5 class="card-title">Card title</h5>
-									<a class="btn btn-primary">code: </a>
+									<h5 class="card-title">Audit Details</h5>
+									<a class="btn btn-primary">More Info</a>
 								</div>
-								<div class="card-footer text-muted">${timestamp}</div>
+								<div class="card-footer text-muted">Timestamp</div>
 							</div>
 						</div>
 					</div>
+				</div>
 
-					<div class="row row-cols-1 row-cols-md-2 g-5">
+				<!-- Right Half: Top 5 Projects -->
+				<div class="col-md-6">
+					<h3 class="mb-4">Top 5 Projects</h3>
+					<div class="row row-cols-1 g-4" id="projects-container">
+						<!-- Placeholder cards for projects -->
 						<div class="col">
-							<div class="card mb-4">
-								<div class="card-header">Audit with</div>
+							<div class="card">
+								<div class="card-header">Project</div>
 								<div class="card-body">
-									<h5 class="card-title">Card title</h5>
-									<a class="btn btn-primary">code: </a>
+									<h5 class="card-title">Project Title</h5>
+									<p class="card-text">Project Description</p>
 								</div>
-								<div class="card-footer text-muted">${timestamp}</div>
+								<div class="card-footer text-muted">XP Amount</div>
 							</div>
 						</div>
 					</div>
+				</div>
 
-					<div class="row row-cols-1 row-cols-md-2 g-5">
-						<div class="col">
-							<div class="card mb-4">
-								<div class="card-header">Audit with</div>
-								<div class="card-body">
-									<h5 class="card-title">Card title</h5>
-									<a class="btn btn-primary">code: </a>
-								</div>
-								<div class="card-footer text-muted">${timestamp}</div>
-							</div>
-						</div>
-					</div>
-
-				</article>
-			</section>
+			</div>
 		</div>
 	</main>
 

@@ -2,6 +2,8 @@ console.log("profile.js loaded!");
 
 import { jwt } from "./redirect.js";
 
+const GRAPHQL_ENDPOINT = "https://learn.reboot01.com/api/graphql-engine/v1/graphql"
+
 let currUser = {
 	id: 0,
 	login: "",
@@ -17,9 +19,18 @@ const headers = {
 	"Pragma": "no-cache",
 };
 
+function formatTimestamp(timestamp) {
+	const date = new Date(timestamp);
+	return date.toLocaleString("en-US", {
+		year: "numeric",
+		month: "short",
+		day: "numeric",
+	});
+}
+
 async function fetchGraphQL(query, operationName) {
 	const body = JSON.stringify({ query, operationName });
-	const response = await fetch("https://learn.reboot01.com/api/graphql-engine/v1/graphql", {
+	const response = await fetch(GRAPHQL_ENDPOINT, {
 		method: "POST",
 		headers: headers,
 		body: body,
@@ -70,16 +81,22 @@ async function fetchLastAudits() {
 		`query lastAuditsGiven {
 			audit(where: {auditor: {id: {_eq: ${currUser.id}}}}, order_by: {id: desc}, limit: 5) {
 				createdAt
+				auditedAt
 				group {
 					captain {
+						id
 						firstName
 						lastName
 						login
 					}
 				}
+				private{
+					code
+				}
 			}
 		}`;
 	const data = await fetchGraphQL(query, "lastAuditsGiven");
+	populateAudits(data.audit);
 	// console.log("Last Audits:", data.audit);
 }
 
@@ -92,6 +109,7 @@ async function fetchTopProjects() {
 			}
 		}`;
 	const data = await fetchGraphQL(query, "topProjects");
+	populateProjects(data.xp_view)
 	// console.log("Top Projects:", data.xp_view);
 }
 
@@ -105,6 +123,44 @@ async function fetchTopProjects() {
 		console.error(error.message);
 	}
 })();
+
+const auditsContainer = document.getElementById("audits-container");
+function populateAudits(audits) {
+	auditsContainer.innerHTML = "";
+	audits.forEach((audit) => {
+		const card = document.createElement("div");
+		card.className = "col";
+		card.innerHTML =
+			`<div class="card">
+				<div class="card-header">Audit with ${audit.group.captain.firstName} ${audit.group.captain.lastName} (${audit.group.captain.login})</div>
+				<div class="card-body">
+					<h5 class="card-title">Details about audit</h5>
+					<a class="btn btn-primary">Code: ${audit.private.code}</a>
+				</div>
+				<div class="card-footer text-muted">${formatTimestamp(audit.createdAt)}</div>
+			</div>`;
+		auditsContainer.appendChild(card);
+	});
+}
+
+const projectsContainer = document.getElementById("projects-container");
+function populateProjects(projects) {
+	projectsContainer.innerHTML = "";
+	projects.forEach((project) => {
+		const card = document.createElement("div");
+		card.className = "col";
+		card.innerHTML =
+			`<div class="card">
+				<div class="card-header">Project</div>
+				<div class="card-body">
+					<h5 class="card-title">${project.path}</h5>
+					<p class="card-text">Earned XP: ${project.amount}</p>
+				</div>
+				<!-- <div class="card-footer text-muted">Description</div> -->
+			</div>`;
+		projectsContainer.appendChild(card);
+	});
+}
 
 const logoutButton = document.getElementById("Logout");
 if (logoutButton) {
