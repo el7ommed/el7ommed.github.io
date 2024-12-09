@@ -84,11 +84,6 @@ function updatePage(user) {
 }
 
 async function fetchLastAudits() {
-	if (currUser.id === 0) {
-		console.error("User ID is not set yet!");
-		return;
-	}
-
 	const query =
 		`query lastAuditsGiven {
 			audit(where: {auditor: {id: {_eq: ${currUser.id}}}}, order_by: {id: desc}, limit: 5) {
@@ -143,9 +138,8 @@ async function fetchTopSkills() {
 	const data = await fetchGraphQL(query, "highestSkills");
 	const topSkills = data.user[0].transactions
 		.sort((a, b) => b.amount - a.amount)
-		.slice(0, 5);
-	populateSkills(topSkills);
-	renderSpiderChart(topSkills);
+	populateSkills(topSkills.slice(0, 5));
+	renderSpiderChart(topSkills.slice(0, 6));
 	// console.log("Top Skills:", data.user[0].transactions);
 }
 
@@ -229,7 +223,7 @@ function renderSpiderChart(skills) {
 
 	const angleScale = d3.scaleLinear()
 		.domain([0, data.length])
-		.range([0, 2 * Math.PI]);
+		.range([-Math.PI / 2, (3 * Math.PI) / 2]);
 
 	const radiusScale = d3.scaleLinear()
 		.domain([0, d3.max(data, d => d.value)])
