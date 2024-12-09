@@ -95,6 +95,7 @@ async function fetchLastAudits() {
 				createdAt
 				auditedAt
 				group {
+					path
 					captain {
 						id
 						firstName
@@ -162,12 +163,14 @@ function populateAudits(audits) {
 		card.className = "col";
 		card.innerHTML =
 			`<div class="card">
-				<div class="card-header">Audit with ${audit.group.captain.firstName} ${audit.group.captain.lastName} (${audit.group.captain.login})</div>
-				<div class="card-body">
-					<h5 class="card-title">Details about audit</h5>
-					<a class="btn btn-primary">Code: ${audit.private.code}</a>
-				</div>
-				<div class="card-footer text-muted">${formatTimestamp(audit.createdAt)}</div>
+			<div class="card-header">
+				Audit with ${audit.group.captain.firstName} ${audit.group.captain.lastName} (${audit.group.captain.login})
+			</div>
+			<div class="card-body d-flex justify-content-between align-items-center">
+			<h5 class="card-title mb-0">${audit.group.path.split('/').pop()}</h5>
+			<a class="btn btn-primary btn-sm ms-3">Code: ${audit.private.code}</a>
+			</div>
+			<div class="card-footer text-muted">${formatTimestamp(audit.createdAt)}</div>
 			</div>`;
 		auditsContainer.appendChild(card);
 	});

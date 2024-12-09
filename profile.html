@@ -48,37 +48,43 @@
 						<!-- Placeholder cards for audits -->
 						<div class="col">
 							<div class="card">
-								<div class="card-header">Audit with</div>
-								<div class="card-body">
-									<h5 class="card-title">Audit Details</h5>
-									<a class="btn btn-primary">More Info</a>
+								<div class="card-header">
+									Audit with
+									${audit.group.captain.firstName}
+									${audit.group.captain.lastName}
+									(${audit.group.captain.login})
 								</div>
-								<div class="card-footer text-muted">Timestamp</div>
+								<div class="card-body d-flex justify-content-between align-items-center">
+									<h5 class="card-title mb-0">${audit.group.path.split('/').pop()}</h5>
+									<a class="btn btn-primary btn-sm ms-3">Code: ${audit.private.code}</a>
+								</div>
+								<div class="card-footer text-muted">
+									${formatTimestamp(audit.createdAt)}
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 
-				<!-- Right Half: Top 5 Projects -->
-				<div class="col-md-6">
-					<h3 class="mb-4">Top 5 Projects</h3>
-					<div class="row row-cols-1 g-4" id="projects-container">
-						<!-- Placeholder cards for projects -->
-						<div class="col">
-							<div class="card">
-								<div class="card-header">Project</div>
-								<div class="card-body">
-									<h5 class="card-title">Project Title</h5>
-									<p class="card-text">Project Description</p>
+					<!-- Right Half: Top 5 Projects -->
+					<div class="col-md-6">
+						<h3 class="mb-4">Top 5 Projects</h3>
+						<div class="row row-cols-1 g-4" id="projects-container">
+							<!-- Placeholder cards for projects -->
+							<div class="col">
+								<div class="card">
+									<div class="card-header">Project</div>
+									<div class="card-body">
+										<h5 class="card-title">${project.path.split('/').pop()}</h5>
+										<p class="card-text">Earned XP: ${formatBytes(project.amount)}</p>
+									</div>
+									<!-- <div class="card-footer text-muted">Description</div> -->
 								</div>
-								<div class="card-footer text-muted">XP Amount</div>
 							</div>
 						</div>
 					</div>
-				</div>
 
+				</div>
 			</div>
-		</div>
 	</main>
 
 	<script type="module" src="profile.js"></script>
