@@ -141,7 +141,10 @@ async function fetchTopSkills() {
 			}
 		}`
 	const data = await fetchGraphQL(query, "highestSkills");
-	populateSkills(data.user[0].transactions);
+	const topSkills = data.user[0].transactions
+		.sort((a, b) => b.amount - a.amount)
+		.slice(0, 5);
+	populateSkills(topSkills);
 	// console.log("Top Skills:", data.user[0].transactions);
 }
 
@@ -200,14 +203,13 @@ const skillsContainer = document.getElementById("skills-container");
 function populateSkills(transactions) {
 	skillsContainer.innerHTML = "";
 	transactions.forEach((transaction) => {
-		// console.log(transaction);
 		const card = document.createElement("div");
 		card.className = "col";
 		card.innerHTML =
 			`<div class="card">
 				<div class="card-header">${transaction.type.split('_').pop()}</div>
 				<div class="card-body">
-					<h5 class="card-title">${transaction.amount}</h5>
+					<h5 class="card-title">${transaction.amount}%</h5>
 				</div>
 			</div>`;
 		skillsContainer.appendChild(card);
