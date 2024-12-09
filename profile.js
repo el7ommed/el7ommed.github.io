@@ -223,7 +223,7 @@ function renderSpiderChart(skills) {
 
 	const angleScale = d3.scaleLinear()
 		.domain([0, data.length])
-		.range([-Math.PI / 2, (3 * Math.PI) / 2]);
+		.range([0, 2 * Math.PI]);
 
 	const radiusScale = d3.scaleLinear()
 		.domain([0, d3.max(data, d => d.value)])
@@ -241,7 +241,7 @@ function renderSpiderChart(skills) {
 	}
 
 	data.forEach((d, i) => {
-		const angle = angleScale(i);
+		const angle = angleScale(i) - Math.PI / 2;
 		const x = Math.cos(angle) * radius;
 		const y = Math.sin(angle) * radius;
 
@@ -260,24 +260,13 @@ function renderSpiderChart(skills) {
 		svg.append("text")
 			.attr("x", labelX)
 			.attr("y", labelY)
-			.attr("text-anchor", angle > Math.PI ? "end" : "start")
+			.attr("text-anchor", "middle")
 			.style("font-size", "12px")
 			.text(d.axis);
 	});
 
-	const line = d3.lineRadial()
-		.radius(d => radiusScale(d.value))
-		.angle((d, i) => angleScale(i));
-
-	svg.append("path")
-		.datum(data)
-		.attr("d", line)
-		.attr("fill", "rgba(0, 123, 255, 0.3)")
-		.attr("stroke", "blue")
-		.attr("stroke-width", 2);
-
 	data.forEach((d, i) => {
-		const angle = angleScale(i);
+		const angle = angleScale(i) - Math.PI / 2;
 		const x = Math.cos(angle) * radiusScale(d.value);
 		const y = Math.sin(angle) * radiusScale(d.value);
 
