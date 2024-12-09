@@ -145,6 +145,7 @@ async function fetchTopSkills() {
 		.sort((a, b) => b.amount - a.amount)
 		.slice(0, 5);
 	populateSkills(topSkills);
+	renderSpiderChart(topSkills);
 	// console.log("Top Skills:", data.user[0].transactions);
 }
 
@@ -205,6 +206,62 @@ function renderPieChart({ totalUp, totalDown }) {
 		.attr("transform", d => `translate(${arc.centroid(d)})`)
 		.style("text-anchor", "middle")
 		.text(d => d.data.label);
+}
+
+function renderSpiderChart(skills) {
+	const data = skills.map(skill => ({
+		axis: skill.type.split("_").pop(),
+		value: skill.amount,
+	}));
+
+	const
+		width = 300, height = 300,
+		radius = Math.min(width, height) / 2,
+		levels = 10;
+
+	const svg = d3.select("#spider-chart")
+		.append("svg")
+		.attr("width", width)
+		.attr("height", height)
+		.append("g")
+		.attr("transform", `translate(${width / 2}, ${height / 2})`);
+
+	const angleScale = d3.scaleLinear().domain([0, data.length]).range([0, 2 * Math.PI]);
+	const radiusScale = d3.scaleLinear().domain([0, d3.max(data, d => d.value)]).range([0, radius]);
+
+	data.forEach((d, i) => {
+		const angle = angleScale(i);
+		const x = Math.cos(angle) * radius;
+		const y = Math.sin(angle) * radius;
+
+		svg.append("line")
+			.attr("x1", 0)
+			.attr("y1", 0)
+			.attr("x2", x)
+			.attr("y2", y)
+			.attr("stroke", "gray");
+	});
+
+	for (let i = 1; i <= levels; i++) {
+		const levelRadius = (radius / levels) * i;
+		svg.append("circle")
+			.attr("cx", 0)
+			.attr("cy", 0)
+			.attr("r", levelRadius)
+			.attr("fill", "none")
+			.attr("stroke", "lightgray");
+	}
+
+	const line = d3.lineRadial()
+		.radius(d => radiusScale(d.value))
+		.angle((d, i) => angleScale(i));
+
+	svg.append("path")
+		.datum(data)
+		.attr("d", line)
+		.attr("fill", "rgba(0, 123, 255, 0.3)")
+		.attr("stroke", "blue")
+		.attr("stroke-width", 2);
 }
 
 (async () => {
