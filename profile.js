@@ -157,7 +157,51 @@ async function fetchAuditRatio() {
 			}
 		}`;
 	const data = await fetchGraphQL(query, "totalRatio");
+	renderPieChart(data.user[0]);
 	// console.log("Audit Ratio:", data.user[0]);
+}
+const totalAuditsTitle = document.getElementById("total-audits-title");
+function renderPieChart({ totalUp, totalDown }) {
+	totalAuditsTitle.textContent = `Audits Done: ${formatBytes(totalUp)} | Audits Received: ${formatBytes(totalDown)}`;
+
+	const data = [
+		{ label: "Audits Done", value: totalUp },
+		{ label: "Audits Received", value: totalDown },
+	];
+
+	const
+		width = 300,
+		height = 300,
+		radius = Math.min(width, height) / 2;
+
+	const svg = d3.select("#pie-chart")
+		.append("svg")
+		.attr("width", width)
+		.attr("height", height)
+		.append("g")
+		.attr("transform", `translate(${width / 2}, ${height / 2})`);
+
+	const color = d3.scaleOrdinal(["#0061F5", "#DA2E40"]);
+
+	const pie = d3.pie().value(d => d.value);
+	const arc = d3.arc().innerRadius(0).outerRadius(radius);
+
+	svg.selectAll("path")
+		.data(pie(data))
+		.enter()
+		.append("path")
+		.attr("d", arc)
+		.attr("fill", d => color(d.data.label))
+		.attr("stroke", "white")
+		.style("stroke-width", "5px");
+
+	svg.selectAll("text")
+		.data(pie(data))
+		.enter()
+		.append("text")
+		.attr("transform", d => `translate(${arc.centroid(d)})`)
+		.style("text-anchor", "middle")
+		.text(d => d.data.label);
 }
 
 (async () => {
