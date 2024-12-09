@@ -160,6 +160,7 @@ async function fetchAuditRatio() {
 	renderPieChart(data.user[0]);
 	// console.log("Audit Ratio:", data.user[0]);
 }
+
 const totalAuditsTitle = document.getElementById("total-audits-title");
 function renderPieChart({ totalUp, totalDown }) {
 	totalAuditsTitle.textContent = `Audits Done: ${formatBytes(totalUp)} | Audits Received: ${formatBytes(totalDown)}`;
@@ -199,6 +200,8 @@ function renderPieChart({ totalUp, totalDown }) {
 		.data(pie(data))
 		.enter()
 		.append("text")
+		.style("fill", "white")
+		.style("font-size", "14px")
 		.attr("transform", d => `translate(${arc.centroid(d)})`)
 		.style("text-anchor", "middle")
 		.text(d => d.data.label);
