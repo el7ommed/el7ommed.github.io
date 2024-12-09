@@ -148,12 +148,25 @@ async function fetchTopSkills() {
 	// console.log("Top Skills:", data.user[0].transactions);
 }
 
+async function fetchAuditRatio() {
+	const query =
+		`query totalRatio{
+			user{
+				totalUp
+				totalDown
+			}
+		}`;
+	const data = await fetchGraphQL(query, "totalRatio");
+	// console.log("Audit Ratio:", data.user[0]);
+}
+
 (async () => {
 	try {
 		await fetchBasicInfo();
 		await fetchLastAudits();
 		await fetchTopProjects();
 		await fetchTopSkills();
+		await fetchAuditRatio();
 	} catch (error) {
 		console.error(error.message);
 	}
