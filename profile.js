@@ -215,9 +215,10 @@ function renderSpiderChart(skills) {
 	}));
 
 	const
-		width = 300, height = 300,
+		width = 300,
+		height = 300,
 		radius = Math.min(width, height) / 2,
-		levels = 10;
+		levels = 5;
 
 	const svg = d3.select("#spider-chart")
 		.append("svg")
@@ -226,8 +227,24 @@ function renderSpiderChart(skills) {
 		.append("g")
 		.attr("transform", `translate(${width / 2}, ${height / 2})`);
 
-	const angleScale = d3.scaleLinear().domain([0, data.length]).range([0, 2 * Math.PI]);
-	const radiusScale = d3.scaleLinear().domain([0, d3.max(data, d => d.value)]).range([0, radius]);
+	const angleScale = d3.scaleLinear()
+		.domain([0, data.length])
+		.range([0, 2 * Math.PI]);
+
+	const radiusScale = d3.scaleLinear()
+		.domain([0, d3.max(data, d => d.value)])
+		.range([0, radius]);
+
+	for (let i = 1; i <= levels; i++) {
+		const levelRadius = (radius / levels) * i;
+		svg.append("circle")
+			.attr("cx", 0)
+			.attr("cy", 0)
+			.attr("r", levelRadius)
+			.attr("fill", "none")
+			.attr("stroke", "lightgray")
+			.attr("stroke-width", 0.5);
+	}
 
 	data.forEach((d, i) => {
 		const angle = angleScale(i);
@@ -239,18 +256,20 @@ function renderSpiderChart(skills) {
 			.attr("y1", 0)
 			.attr("x2", x)
 			.attr("y2", y)
-			.attr("stroke", "gray");
-	});
+			.attr("stroke", "gray")
+			.attr("stroke-width", 0.5);
 
-	for (let i = 1; i <= levels; i++) {
-		const levelRadius = (radius / levels) * i;
-		svg.append("circle")
-			.attr("cx", 0)
-			.attr("cy", 0)
-			.attr("r", levelRadius)
-			.attr("fill", "none")
-			.attr("stroke", "lightgray");
-	}
+		const labelOffset = 15;
+		const labelX = Math.cos(angle) * (radius + labelOffset);
+		const labelY = Math.sin(angle) * (radius + labelOffset);
+
+		svg.append("text")
+			.attr("x", labelX)
+			.attr("y", labelY)
+			.attr("text-anchor", angle > Math.PI ? "end" : "start")
+			.style("font-size", "12px")
+			.text(d.axis);
+	});
 
 	const line = d3.lineRadial()
 		.radius(d => radiusScale(d.value))
@@ -262,6 +281,20 @@ function renderSpiderChart(skills) {
 		.attr("fill", "rgba(0, 123, 255, 0.3)")
 		.attr("stroke", "blue")
 		.attr("stroke-width", 2);
+
+	data.forEach((d, i) => {
+		const angle = angleScale(i);
+		const x = Math.cos(angle) * radiusScale(d.value);
+		const y = Math.sin(angle) * radiusScale(d.value);
+
+		svg.append("circle")
+			.attr("cx", x)
+			.attr("cy", y)
+			.attr("r", 4)
+			.attr("fill", "blue")
+			.attr("stroke", "white")
+			.attr("stroke-width", 1.5);
+	});
 }
 
 (async () => {
