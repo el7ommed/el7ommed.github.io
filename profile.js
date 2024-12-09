@@ -227,7 +227,7 @@ function renderSpiderChart(skills) {
 		.range([0, 2 * Math.PI]);
 
 	const radiusScale = d3.scaleLinear()
-		.domain([0, d3.max(data, d => d.value)])
+		.domain([0, 100])
 		.range([0, radius]);
 
 	for (let i = 1; i <= levels; i++) {
@@ -253,17 +253,6 @@ function renderSpiderChart(skills) {
 			.attr("y2", y)
 			.attr("stroke", "gray")
 			.attr("stroke-width", 0.5);
-
-		const labelOffset = 15;
-		const labelX = Math.cos(angle) * (radius + labelOffset);
-		const labelY = Math.sin(angle) * (radius + labelOffset);
-
-		svg.append("text")
-			.attr("x", labelX)
-			.attr("y", labelY)
-			.attr("text-anchor", "middle")
-			.style("font-size", "12px")
-			.text(d.axis);
 	});
 
 	const line = d3.line()
@@ -281,9 +270,7 @@ function renderSpiderChart(skills) {
 		.datum(data)
 		.attr("d", line)
 		.attr("fill", "blue")
-		.attr("fill-opacity", 0.1)
-		// .attr("stroke", "blue")
-		// .attr("stroke-width", 1);
+		.attr("fill-opacity", 0.1);
 
 	data.forEach((d, i) => {
 		const angle = angleScale(i) - Math.PI / 2;
@@ -297,6 +284,14 @@ function renderSpiderChart(skills) {
 			.attr("fill", "blue")
 			.attr("stroke", "white")
 			.attr("stroke-width", 1.5);
+
+		const labelOffsetY = 10;
+		svg.append("text")
+			.attr("x", x)
+			.attr("y", y - labelOffsetY)
+			.attr("text-anchor", "middle")
+			.style("font-size", "12px")
+			.text(d.axis);
 	});
 }
 
