@@ -203,9 +203,10 @@ function renderPieChart({ totalUp, totalDown }) {
 }
 
 function renderSpiderChart(skills) {
-	const data = skills.map(skill => ({
+	const data = skills.map((skill, i) => ({
 		axis: skill.type.split("_").pop(),
 		value: skill.amount,
+		index: i
 	}));
 
 	const
@@ -264,6 +265,25 @@ function renderSpiderChart(skills) {
 			.style("font-size", "12px")
 			.text(d.axis);
 	});
+
+	const line = d3.line()
+		.x(d => {
+			const angle = angleScale(d.index) - Math.PI / 2;
+			return Math.cos(angle) * radiusScale(d.value);
+		})
+		.y(d => {
+			const angle = angleScale(d.index) - Math.PI / 2;
+			return Math.sin(angle) * radiusScale(d.value);
+		})
+		.curve(d3.curveLinearClosed);
+
+	svg.append("path")
+		.datum(data)
+		.attr("d", line)
+		.attr("fill", "blue")
+		.attr("fill-opacity", 0.1)
+		// .attr("stroke", "blue")
+		// .attr("stroke-width", 1);
 
 	data.forEach((d, i) => {
 		const angle = angleScale(i) - Math.PI / 2;
