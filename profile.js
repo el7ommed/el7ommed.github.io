@@ -2,7 +2,10 @@ console.log("profile.js loaded!");
 
 import { jwt } from "./redirect.js";
 
-const GRAPHQL_ENDPOINT = "https://learn.reboot01.com/api/graphql-engine/v1/graphql"
+const
+	GRAPHQL_ENDPOINT = "https://learn.reboot01.com/api/graphql-engine/v1/graphql",
+	LOGOUT_ENDPOINT = "https://learn.reboot01.com/api/auth/signout",
+	EXPIRE_ENDPOINT = "https://learn.reboot01.com/api/auth/expire";
 
 let currUser = {
 	id: 0,
@@ -368,6 +371,20 @@ const logoutButton = document.getElementById("Logout");
 if (logoutButton) {
 	logoutButton.addEventListener("click", () => {
 		localStorage.removeItem("jwt");
-		window.location.href = "index.html";
+		logoutFromServer()
+			.then(() => window.location.href = "index.html");
+	});
+}
+
+async function logoutFromServer() {
+	await fetch(LOGOUT_ENDPOINT, {
+		method: "POST",
+		headers: {
+			"x-jwt-token": jwt,
+			"Accept": "*/*",
+			"Cache-Control": "no-cache",
+			"Pragma": "no-cache",
+		},
+		body: "",
 	});
 }
