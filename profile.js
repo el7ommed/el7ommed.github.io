@@ -1,6 +1,9 @@
 console.log("profile.js loaded!");
 
-import { jwt } from "./redirect.js";
+import {
+	jwt,
+	handleExpiredJWT
+} from "./redirect.js";
 
 const
 	GRAPHQL_ENDPOINT = "https://learn.reboot01.com/api/graphql-engine/v1/graphql",
@@ -51,6 +54,7 @@ async function fetchGraphQL(query, operationName) {
 		body: body,
 	});
 	const data = await response.json();
+	handleExpiredJWT(data);
 	if (data.errors) {
 		throw new Error(`GraphQL Error: ${JSON.stringify(data.errors)}`);
 	}
