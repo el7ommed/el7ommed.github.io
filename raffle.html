@@ -44,23 +44,40 @@
 
 <body>
     <div class="controls">
-        <label>Min: <input type="number" id="min" value="1"></label>
-        <label>Max: <input type="number" id="max" value="100"></label>
+        <label>Min: <input type="number" id="min" value="1" onchange="initializeNumbers()"></label>
+        <label>Max: <input type="number" id="max" value="100" onchange="initializeNumbers()"></label>
         <button onclick="raffleNumber()">Raffle</button>
     </div>
     <div class="raffle-number" id="result">?</div>
 
     <script>
-        function raffleNumber() {
+        let availableNumbers = [];
+
+        function initializeNumbers() {
             const min = parseInt(document.getElementById('min').value, 10);
             const max = parseInt(document.getElementById('max').value, 10);
             if (isNaN(min) || isNaN(max) || min > max) {
                 alert("Please enter valid numbers with Min less than or equal to Max.");
                 return;
             }
-            const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+            availableNumbers = [];
+            for (let i = min; i <= max; i++) {
+                availableNumbers.push(i);
+            }
+        }
+
+        function raffleNumber() {
+            if (availableNumbers.length === 0) {
+                alert("All numbers have been used! Change Min/Max or refresh the page to start over.");
+                return;
+            }
+            const randomIndex = Math.floor(Math.random() * availableNumbers.length);
+            const randomNumber = availableNumbers.splice(randomIndex, 1)[0];
             document.getElementById('result').textContent = randomNumber;
         }
+
+        // Initialize numbers when the page loads
+        initializeNumbers();
     </script>
 </body>
 
