@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Raffle</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .raffle-number {
+            font-size: 5rem;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .controls {
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 80px;
+            text-align: center;
+            padding: 5px;
+            font-size: 1rem;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="controls">
+        <label>Min: <input type="number" id="min" value="1"></label>
+        <label>Max: <input type="number" id="max" value="100"></label>
+        <button onclick="raffleNumber()">Raffle</button>
+    </div>
+    <div class="raffle-number" id="result">?</div>
+
+    <script>
+        function raffleNumber() {
+            const min = parseInt(document.getElementById('min').value, 10);
+            const max = parseInt(document.getElementById('max').value, 10);
+            if (isNaN(min) || isNaN(max) || min > max) {
+                alert("Please enter valid numbers with Min less than or equal to Max.");
+                return;
+            }
+            const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+            document.getElementById('result').textContent = randomNumber;
+        }
+    </script>
+</body>
+
+</html>
