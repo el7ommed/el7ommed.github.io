@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khaleeji Raffle</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="controls">
+        <!-- <label>Min: <input type="number" id="min" value="1" onchange="initializeNumbers()"></label> -->
+        <label>Max: <input type="number" id="max" value="100" onchange="initializeNumbers()"></label>
+        <button onclick="raffleNumber()">Shuffle</button>
+    </div>
+
+    <div class="raffle-number" id="result">0</div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
