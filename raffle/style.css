@@ -54,3 +54,18 @@ button {
     cursor: pointer;
     margin-left: 10px;
 }
+
+.carousel-inner {
+    display: flex;
+}
+
+.carousel-item {
+    flex: 0 0 33.33%; /* Shows 3 items at a time */
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}

@@ -1,10 +1,10 @@
 let availableNumbers = [];
 let prizes = [
     { name: 'iPad Pro', image: 'images/100316144_100_02.webp', number: 0 },
-    { name: 'iPhone 16 Pro Max', image: 'images/iphone.jpg', number: 0 },
-    { name: 'Macbook Pro', image: 'images/macbook.jpg', number: 0 },
-    { name: 'Apple Watch', image: 'images/watch.jpg', number: 0 },
-    { name: 'AirPods Pro', image: 'images/airpods.jpg', number: 0 }
+    { name: 'iPhone 16 Pro Max', image: 'images/iphone_16_pro_max_desert_titanium_1.jpeg', number: 0 },
+    { name: 'Macbook Pro', image: 'images/macbook_pro_16_inch_m4_pro_or_max_chip_space_black_1.jpeg', number: 0 },
+    { name: 'Apple Watch', image: 'images/apple_watch_series_10_46mm_gps_jet_black_aluminum_sport_band_black_1.jpeg', number: 0 },
+    { name: 'AirPods Pro', image: 'images/S400900642_1.jpeg', number: 0 }
 ];
 
 function initializeNumbers() {
@@ -32,6 +32,7 @@ function raffleNumber(index) {
     const randomIndex = Math.floor(Math.random() * availableNumbers.length);
     const randomNumber = availableNumbers.splice(randomIndex, 1)[0];
     prizes[index].number = randomNumber;
+
     document.getElementById(`prize-number-${index}`).textContent = randomNumber;
 }
 
@@ -41,9 +42,10 @@ function renderCarousel() {
 
     prizes.forEach((prize, index) => {
         const activeClass = index === 0 ? 'active' : '';
+
         const card = `
             <div class="carousel-item ${activeClass}">
-                <div class="card mx-auto" style="width: 18rem;">
+                <div class="card mx-auto text-center" style="width: 18rem;">
                     <img src="${prize.image}" class="card-img-top" alt="${prize.name}">
                     <div class="card-body">
                         <h5 class="card-title">${prize.name}</h5>
@@ -53,9 +55,9 @@ function renderCarousel() {
                 </div>
             </div>
         `;
+
         carouselContent.innerHTML += card;
     });
 }
 
-// Initialize numbers and render carousel when the page loads
 initializeNumbers();
