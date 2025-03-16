@@ -7,6 +7,64 @@ let prizes = [
     { name: 'AirPods Pro', image: 'images/S400900642_1.jpeg', number: 0 }
 ];
 
+// const swiper = new Swiper('.swiper', {
+//     // Optional parameters
+//     direction: 'vertical',
+//     loop: true,
+
+//     // If we need pagination
+//     pagination: {
+//         el: '.swiper-pagination',
+//     },
+
+//     // Navigation arrows
+//     navigation: {
+//         nextEl: '.swiper-button-next',
+//         prevEl: '.swiper-button-prev',
+//     },
+
+//     // And if we need scrollbar
+//     scrollbar: {
+//         el: '.swiper-scrollbar',
+//     },
+// });
+
+const swiper = new Swiper('.swiper', {
+    effect: 'coverflow',
+    grabCursor: true,
+    centeredSlides: true,
+    coverFlowEffect: {
+        rotate: 0,
+        stretch: 0,
+        depth: 100,
+        modifier: 4,
+        slideShadows: true,
+    },
+    loop: true,
+    navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev'
+    },
+    keyboard: {
+        enabled: true,
+    },
+    mousewheel: {
+        thresholdDelta: 70
+    },
+    breakpoints: {
+        560: {
+            slidesPerView: 2.5
+        },
+        768: {
+            slidesPerView: 3
+        },
+        1024: {
+            slidesPerView: 3
+        }
+    }
+});
+
+
 function initializeNumbers() {
     const min = 1;
     const max = parseInt(document.getElementById('max')?.value || 100, 10);
