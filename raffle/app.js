@@ -1,3 +1,6 @@
+// import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js';
+// import Swiper from 'raffle/swiper-bundle.min.js';
+
 let availableNumbers = [];
 let prizes = [
     { name: 'iPad Pro', image: 'images/100316144_100_02.webp', number: 0 },
@@ -54,7 +57,7 @@ const swiper = new Swiper('.swiper', {
     },
     breakpoints: {
         560: {
-            slidesPerView: 2.5
+            slidesPerView: 3
         },
         768: {
             slidesPerView: 3
@@ -89,23 +92,24 @@ function raffleNumber(index) {
     }
 
     const displayElement = document.getElementById(`prize-number-${index}`);
-    let shuffleCount = 20; // Number of times to shuffle before stopping
+    let shuffleCount = 30;
+    let delay = 5;
 
-    const shuffleInterval = setInterval(() => {
-        displayElement.textContent = Math.floor(Math.random() * parseInt(document.getElementById('max')?.value || 100, 10)) + 1; // Random temporary number
-        shuffleCount--;
-
-        if (shuffleCount <= 0) {
-            clearInterval(shuffleInterval); // Stop shuffling
-
-            // Pick a real random number from availableNumbers
+    function shuffle() {
+        if (shuffleCount > 0) {
+            displayElement.textContent = Math.floor(Math.random() * parseInt(document.getElementById('max')?.value || 100, 10)) + 1;
+            shuffleCount--;
+            delay += 15;
+            setTimeout(shuffle, delay);
+        } else {
             const randomIndex = Math.floor(Math.random() * availableNumbers.length);
             const randomNumber = availableNumbers.splice(randomIndex, 1)[0];
             prizes[index].number = randomNumber;
-
-            displayElement.textContent = randomNumber; // Display final number
+            displayElement.textContent = randomNumber;
         }
-    }, 80); // Change number every 80ms for a smooth effect
+    }
+
+    shuffle();
 }
 
 function renderCarousel() {

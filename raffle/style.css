@@ -45,16 +45,27 @@ section {
 }
 
 .swiper-slide .slide-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    /* position: absolute; */
+    /* top: 50%; */
+    /* left: 50%; */
+    /* transform: translate(50%, 50%); */
     width: 100%;
+    /* box-shadow: none !important; 
+    background: none !important;  */
 }
 
 .swiper-slide .slide-content img {
     width: 100%;
+    /* padding: 20px, 20px, 20px, 20px; */
     border-radius: 10px;
+}
+
+.card {
+    padding: 20px;
+}
+
+.card-body {
+    padding-top: 20px;
 }
 
 .swiper-button-prev {
@@ -94,3 +105,8 @@ section {
         display: flex;
     }
 } */
+
+.swiper-slide-shadow-left,
+.swiper-slide-shadow-right {
+    display: none !important;
+}
