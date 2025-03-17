@@ -31,6 +31,7 @@ let prizes = [
 
 const swiper = new Swiper('.swiper', {
     effect: 'coverflow',
+    // loop: true,
     grabCursor: true,
     centeredSlides: true,
     coverFlowEffect: {
@@ -52,15 +53,15 @@ const swiper = new Swiper('.swiper', {
         thresholdDelta: 70
     },
     breakpoints: {
-        // 560: {
-        //     slidesPerView: 2.5
-        // },
-        // 768: {
-        //     slidesPerView: 3
-        // },
-        // 1024: {
-        //     slidesPerView: 3
-        // }
+        560: {
+            slidesPerView: 2.5
+        },
+        768: {
+            slidesPerView: 3
+        },
+        1024: {
+            slidesPerView: 3
+        }
     }
 });
 
@@ -87,11 +88,24 @@ function raffleNumber(index) {
         return;
     }
 
-    const randomIndex = Math.floor(Math.random() * availableNumbers.length);
-    const randomNumber = availableNumbers.splice(randomIndex, 1)[0];
-    prizes[index].number = randomNumber;
+    const displayElement = document.getElementById(`prize-number-${index}`);
+    let shuffleCount = 20; // Number of times to shuffle before stopping
 
-    document.getElementById(`prize-number-${index}`).textContent = randomNumber;
+    const shuffleInterval = setInterval(() => {
+        displayElement.textContent = Math.floor(Math.random() * parseInt(document.getElementById('max')?.value || 100, 10)) + 1; // Random temporary number
+        shuffleCount--;
+
+        if (shuffleCount <= 0) {
+            clearInterval(shuffleInterval); // Stop shuffling
+
+            // Pick a real random number from availableNumbers
+            const randomIndex = Math.floor(Math.random() * availableNumbers.length);
+            const randomNumber = availableNumbers.splice(randomIndex, 1)[0];
+            prizes[index].number = randomNumber;
+
+            displayElement.textContent = randomNumber; // Display final number
+        }
+    }, 80); // Change number every 80ms for a smooth effect
 }
 
 function renderCarousel() {
