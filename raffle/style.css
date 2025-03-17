@@ -52,12 +52,20 @@ section {
     width: 100%;
     /* box-shadow: none !important; 
     background: none !important;  */
+    /* transform-style: preserve-3d; */
+    z-index: 1 !important;
+    pointer-events: auto !important;
+
 }
 
 .swiper-slide .slide-content img {
     width: 100%;
     /* padding: 20px, 20px, 20px, 20px; */
     border-radius: 10px;
+}
+
+.swiper-slide-active {
+    z-index: 10 !important;
 }
 
 .card {
@@ -109,4 +117,14 @@ section {
 .swiper-slide-shadow-left,
 .swiper-slide-shadow-right {
     display: none !important;
+}
+
+.bg-bottom-image {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 75%;
+    max-width: 600px;
+    z-index: -1;
 }

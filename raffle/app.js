@@ -34,9 +34,9 @@ let prizes = [
 
 const swiper = new Swiper('.swiper', {
     effect: 'coverflow',
-    // loop: true,
-    grabCursor: true,
+    loop: true,
     centeredSlides: true,
+    slidesPerView: 3,
     coverFlowEffect: {
         rotate: 0,
         stretch: 0,
@@ -44,16 +44,12 @@ const swiper = new Swiper('.swiper', {
         modifier: 4,
         slideShadows: false,
     },
-    loop: true,
     navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev'
     },
     keyboard: {
-        enabled: true,
-    },
-    mousewheel: {
-        thresholdDelta: 70
+        enabled: false,
     },
     breakpoints: {
         560: {
@@ -126,7 +122,7 @@ function renderCarousel() {
                         <img src="${prize.image}" class="card-img-top" alt="${prize.name}">
                         <div class="card-body">
                             <h5 class="card-title">${prize.name}</h5>
-                            <button class="btn btn-success" onclick="raffleNumber(${index})">Shuffle</button>
+                            <button class="btn btn-dark" onclick="raffleNumber(${index})">Shuffle</button>
                             <h2 id="prize-number-${index}" class="mt-3">${prize.number ?? '0'}</h2>
                         </div>
                     </div>
