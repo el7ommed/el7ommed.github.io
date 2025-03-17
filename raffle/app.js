@@ -38,7 +38,7 @@ const swiper = new Swiper('.swiper', {
         stretch: 0,
         depth: 100,
         modifier: 4,
-        slideShadows: true,
+        slideShadows: false,
     },
     loop: true,
     navigation: {
@@ -52,15 +52,15 @@ const swiper = new Swiper('.swiper', {
         thresholdDelta: 70
     },
     breakpoints: {
-        560: {
-            slidesPerView: 2.5
-        },
-        768: {
-            slidesPerView: 3
-        },
-        1024: {
-            slidesPerView: 3
-        }
+        // 560: {
+        //     slidesPerView: 2.5
+        // },
+        // 768: {
+        //     slidesPerView: 3
+        // },
+        // 1024: {
+        //     slidesPerView: 3
+        // }
     }
 });
 
@@ -95,20 +95,22 @@ function raffleNumber(index) {
 }
 
 function renderCarousel() {
-    const carouselContent = document.getElementById('carousel-content');
+    const carouselContent = document.getElementById('dynamic-wrapper');
     carouselContent.innerHTML = '';
 
     prizes.forEach((prize, index) => {
         const activeClass = index === 0 ? 'active' : '';
 
         const card = `
-            <div class="carousel-item ${activeClass}">
-                <div class="card mx-auto text-center" style="width: 18rem;">
-                    <img src="${prize.image}" class="card-img-top" alt="${prize.name}">
-                    <div class="card-body">
-                        <h5 class="card-title">${prize.name}</h5>
-                        <button class="btn btn-success" onclick="raffleNumber(${index})">Shuffle</button>
-                        <h2 id="prize-number-${index}" class="mt-3">${prize.number ?? '0'}</h2>
+            <div class="swiper-slide">
+                <div class="slide-content">
+                    <div class="card mx-auto text-center" style="width: 18rem;">
+                        <img src="${prize.image}" class="card-img-top" alt="${prize.name}">
+                        <div class="card-body">
+                            <h5 class="card-title">${prize.name}</h5>
+                            <button class="btn btn-success" onclick="raffleNumber(${index})">Shuffle</button>
+                            <h2 id="prize-number-${index}" class="mt-3">${prize.number ?? '0'}</h2>
+                        </div>
                     </div>
                 </div>
             </div>
